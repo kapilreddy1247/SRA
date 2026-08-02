@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard — Smart Resume Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Styles.css') }}"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left"></div>
+    <a href="/dashboard" class="nav-brand">
+      <span class="nav-brand-text">Smart Resume <span>Analyzer</span></span>
+    </a>
+    <div class="nav-right">
+      <span class="nav-greeting">Hello, <strong>{{ user.full_name }}</strong></span>
+      <a href="/logout" class="nav-logout">Log Out</a>
+    </div>
+  </nav>
+
+  <div class="db-wrap">
+
+    <!-- ── Welcome ──────────────────────────────────────────── -->
+    <div class="db-welcome">
+      <div class="db-welcome-greet">Welcome, <span>{{ user.full_name }}</span> 👋</div>
+      <div class="db-welcome-sub">
+        Let's analyse your resume and see how well it matches your target role.
+      </div>
+      <span class="db-role-pill">{{ user.role | capitalize }}</span>
+    </div>
+
+    <!-- ── Upload card ───────────────────────────────────────── -->
+    <div class="db-card" id="uploadCard">
+
+      <!-- Step indicators -->
+      <div class="db-steps">
+        <div class="db-step active" data-step="1">
+          <div class="db-step-num">1</div>
+          <div class="db-step-label">Job Role</div>
+        </div>
+        <div class="db-step-line"></div>
+        <div class="db-step" data-step="2">
+          <div class="db-step-num">2</div>
+          <div class="db-step-label">Upload Resume</div>
+        </div>
+      </div>
+
+      <!-- Shared alert -->
+      <div id="dbAlert" class="alert db-alert"></div>
+
+      <!-- Panel 1 — Job role -->
+      <div id="panel1" class="db-panel active">
+        <div class="db-panel-title">What role are you targeting?</div>
+        <div class="db-panel-sub">
+          Type a job title and select from the list — we'll tailor the analysis to it.
+        </div>
+
+        <!-- Autocomplete -->
+        <div class="ac-wrap" id="acWrap">
+          <input
+            id="jobRole"
+            type="text"
+            class="db-job-input"
+            placeholder="e.g. Data Scientist, Frontend Developer…"
+            autocomplete="off"
+            aria-autocomplete="list"
+            aria-controls="acList"
+          />
+          <ul class="ac-list" id="acList" role="listbox"></ul>
+        </div>
+        <input type="hidden" id="roleId" value=""/>
+
+        <div class="db-actions">
+          <button class="db-btn-next" onclick="handleNextStep1()">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Panel 2 — Upload -->
+      <div id="panel2" class="db-panel">
+        <div class="db-panel-title">Upload your resume</div>
+        <div class="db-panel-sub">
+          Analysing for <strong id="chosenRole"></strong> — upload your PDF below.
+        </div>
+
+        <div class="db-dropzone" id="dropzone">
+          <input type="file" id="resumeFile" accept=".pdf"/>
+          <div class="db-drop-icon">📄</div>
+          <div class="db-drop-title">Drop your PDF here</div>
+          <div class="db-drop-sub">or <strong>click to browse</strong> · max 5 MB</div>
+        </div>
+
+        <div class="db-file-chosen" id="fileChosen">
+          <span>📎</span>
+          <span class="db-file-name" id="fileName"></span>
+          <button class="db-file-remove" id="removeFile">✕ Remove</button>
+        </div>
+
+        <div class="db-actions">
+          <button class="db-btn-back" onclick="goToStep(1)">← Back</button>
+          <button class="db-btn-next" id="analyseBtn" disabled onclick="handleAnalyse()">
+            Analyse Resume
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /db-card -->
+
+    <!-- ── Loading spinner ───────────────────────────────────── -->
+    <div class="load-wrap" id="loadWrap">
+      <div class="load-spinner"></div>
+      <div>
+        <div class="load-label">Analysing your resume…</div>
+        <div class="load-sub">Extracting skills · Matching role · Scoring readiness</div>
+      </div>
+    </div>
+
+    <!-- ── Results card ──────────────────────────────────────── -->
+    <div class="res-card" id="resultsCard" style="display:none;">
+
+      <!-- Header -->
+      <div class="res-header">
+        <div>
+          <div class="res-title" id="resTitle">Analysis Complete</div>
+          <div class="res-subtitle" id="resSubtitle"></div>
+        </div>
+        <div class="res-header-actions">
+          <a class="res-report-btn" id="resReportBtn" href="#" target="_blank" style="display:none;">
+            ⬇ Download Report
+          </a>
+          <button class="res-new-btn" onclick="startNew()">+ New Analysis</button>
+        </div>
+      </div>
+
+      <!-- Score dial + bars -->
+      <div class="res-top">
+        <div class="res-dial-wrap">
+          <svg class="res-dial-svg" viewBox="0 0 120 120">
+            <circle class="res-dial-track" cx="60" cy="60" r="50"/>
+            <circle class="res-dial-fill" id="resDial" cx="60" cy="60" r="50"
+                    stroke-dasharray="314" stroke-dashoffset="314"/>
+          </svg>
+          <div class="res-dial-inner">
+            <div class="res-dial-score" id="resScore">—</div>
+            <div class="res-dial-label" id="resScoreLabel">Readiness</div>
+          </div>
+        </div>
+
+        <div class="res-bars">
+          <div class="res-bar-row">
+            <div class="res-bar-label">Core</div>
+            <div class="res-bar-track">
+              <div class="res-bar-fill res-bar-core" id="barCore"></div>
+            </div>
+            <div class="res-bar-count" id="cntCore">—</div>
+          </div>
+          <div class="res-bar-row">
+            <div class="res-bar-label">Secondary</div>
+            <div class="res-bar-track">
+              <div class="res-bar-fill res-bar-sec" id="barSec"></div>
+            </div>
+            <div class="res-bar-count" id="cntSec">—</div>
+          </div>
+          <div class="res-bar-row">
+            <div class="res-bar-label">Bonus</div>
+            <div class="res-bar-track">
+              <div class="res-bar-fill res-bar-bonus" id="barBonus"></div>
+            </div>
+            <div class="res-bar-count" id="cntBonus">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI prediction note -->
+      <div class="res-pred" id="resPred" style="display:none;">
+        <span class="res-pred-icon">🤖</span>
+        <span id="resPredText"></span>
+      </div>
+
+      <!-- Tabs -->
+      <div class="res-tabs">
+        <button class="res-tab active" data-tab="matched" onclick="switchTab('matched')">
+          ✓ Matched
+          <span class="res-tab-badge res-badge-ok" id="badgeMatched">0</span>
+        </button>
+        <button class="res-tab" data-tab="missing" onclick="switchTab('missing')">
+          ✗ Missing
+          <span class="res-tab-badge res-badge-err" id="badgeMissing">0</span>
+        </button>
+        <button class="res-tab" data-tab="recs" onclick="switchTab('recs')">
+          🎯 Recommendations
+        </button>
+        <button class="res-tab" data-tab="scoring" onclick="switchTab('scoring')">
+          📊 How Scored
+        </button>
+      </div>
+
+      <!-- Tab: Matched -->
+      <div class="res-tab-panel active" id="tab-matched">
+        <div id="matchedSkills"></div>
+      </div>
+
+      <!-- Tab: Missing -->
+      <div class="res-tab-panel" id="tab-missing">
+        <div id="missingSkills"></div>
+      </div>
+
+      <!-- Tab: Recommendations -->
+      <div class="res-tab-panel" id="tab-recs">
+        <div class="res-recs" id="recsList"></div>
+      </div>
+
+      <!-- Tab: How Scored -->
+      <div class="res-tab-panel" id="tab-scoring">
+        <div class = 'title'>HERE IF ANY LIKE ML MODEL OR SKILL MATCH GIVES 100 THEM AUTOMATICALLY READINESS SCORE BECOMES 100</div>
+        <div id="scoringBreakdown"></div>
+      </div>
+
+    </div><!-- /res-card -->
+
+    <!-- ── History ───────────────────────────────────────────── -->
+    <div class="hist-section" id="histSection">
+      <div class="hist-header">
+        <div class="hist-title">Past Analyses</div>
+        <div class="hist-sub">Your last 10 analyses — click any row to reload results.</div>
+      </div>
+      <div class="hist-list" id="histList">
+        <div class="hist-loading">Loading history…</div>
+      </div>
+    </div>
+
+  </div><!-- /db-wrap -->
+
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

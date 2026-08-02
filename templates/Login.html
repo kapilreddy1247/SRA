@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In — Smart Resume Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Styles.css') }}"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left"></div>
+    <a href="{{ url_for('login') }}" class="nav-brand">
+      <span class="nav-brand-text">Smart Resume <span>Analyzer</span></span>
+    </a>
+    <div class="nav-right"></div>
+  </nav>
+  <a href="{{ url_for('admin_login_page') }}" class="page-admin-link">Admin</a>
+
+  <div class="page-center">
+    <div class="single-card">
+
+      <div class="form-title">Welcome Back</div>
+      <div class="form-sub">Sign in to continue your career analysis</div>
+
+      <form method="POST" action="{{ url_for('login') }}" class="fields" novalidate>
+
+        <div class="field">
+          <label class="field-label" for="identifier">Email or Username</label>
+          <div class="input-wrap">
+            <input id="identifier" name="identifier" type="text"
+              class="field-input{% if identifier_error %} input-err{% endif %}"
+              placeholder="rahul.sharma@gmail.com"
+              value="{{ identifier_value or '' }}"
+              autocomplete="username"
+              oninput="clearLoginErr('identifier','hintIdentifier')"/>
+          </div>
+          <div class="field-hint{% if identifier_error %} err{% endif %}" id="hintIdentifier">{% if identifier_error %}{{ identifier_error }}{% endif %}</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="password">Password</label>
+          <div class="input-wrap">
+            <input id="password" name="password" type="password"
+              class="field-input has-btn{% if password_error %} input-err{% endif %}"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              oninput="clearLoginErr('password','hintPassword')"/>
+            <button type="button" class="show-pw-btn"
+              onclick="toggleVisibility('password', this)">Show</button>
+          </div>
+          <div class="field-hint{% if password_error %} err{% endif %}" id="hintPassword">{% if password_error %}{{ password_error }}{% endif %}</div>
+        </div>
+
+        <div class="form-row-right">
+          <a href="{{ url_for('forgot') }}" class="text-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-blue">Sign In</button>
+
+      </form>
+
+      <div class="form-footer">
+        Don't have an account?
+        <a href="{{ url_for('register') }}" class="text-link">Create one</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+</body>
+</html>

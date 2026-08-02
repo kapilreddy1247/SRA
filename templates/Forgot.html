@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forgot Password — Smart Resume Analyzer</title>
+  <link rel="icon" type="image/x-icon"       href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}"/>
+  <link rel="apple-touch-icon" sizes="180x180"    href="{{ url_for('static', filename='img/apple-touch-icon.png') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Styles.css') }}"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left"></div>
+    <a href="{{ url_for('login') }}" class="nav-brand">
+      <span class="nav-brand-text">Smart Resume <span>Analyzer</span></span>
+    </a>
+    <div class="nav-right"></div>
+  </nav>
+  <a href="{{ url_for('admin_login_page') }}" class="page-admin-link">Admin</a>
+
+  <div class="page-center">
+    <div class="single-card">
+
+      {# ── STATE 1: Email sent successfully ──────────── #}
+      {% if success %}
+      <div class="state-card">
+        <div class="state-icon-wrap success">📬</div>
+        <div class="state-title">Check your inbox</div>
+        <p class="state-sub">
+          We've sent a password reset link to your email.
+          It will expire in <strong>1 hour</strong>.
+        </p>
+        <div class="state-hint">
+          <b>Can't find the email?</b><br/>
+          • Check your <b>Spam</b> or <b>Junk</b> folder<br/>
+          • Make sure you entered the correct email<br/>
+          • Allow a minute or two for delivery
+        </div>
+        <div class="state-divider"></div>
+        <a href="{{ url_for('login') }}" class="btn btn-blue"
+           style="width:100%;text-align:center;box-sizing:border-box;margin-bottom:0.6rem;">
+          ← Back to Sign In
+        </a>
+        <p class="state-foot">
+          Didn't receive it? <a href="{{ url_for('forgot') }}">Try again</a>
+        </p>
+      </div>
+
+      {# ── STATE 2: Email not registered ────────────── #}
+      {% elif not_registered %}
+      <div class="state-card">
+        <div class="state-icon-wrap not-found">🚫</div>
+        <div class="state-title">Not registered</div>
+        <p class="state-sub">
+          We couldn't find an account associated with:
+        </p>
+        <div class="email-chip">✉ {{ not_registered }}</div>
+        <div class="state-hint error-hint">
+          <b>What can you do?</b><br/>
+          • Double-check for typos in the email address<br/>
+          • Try a different email you may have registered with<br/>
+          • Create a new account if you haven't signed up yet
+        </div>
+        <div class="state-divider"></div>
+        <a href="{{ url_for('forgot') }}" class="btn btn-blue"
+           style="width:100%;text-align:center;box-sizing:border-box;margin-bottom:0.6rem;">
+          Try a different email
+        </a>
+        <a href="{{ url_for('register') }}" class="btn btn-ghost"
+           style="width:100%;text-align:center;box-sizing:border-box;">
+          Create an account
+        </a>
+      </div>
+
+      {# ── STATE 3: Default form ─────────────────────── #}
+      {% else %}
+      <div class="form-title">Forgot Password?</div>
+      <div class="form-sub">Enter your registered email and we'll send you a reset link.</div>
+
+      {% if error %}
+        <div class="alert form-alert alert-error">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST" action="{{ url_for('forgot') }}" class="fields" novalidate>
+        <div class="field">
+          <label class="field-label" for="email">Email Address</label>
+          <div class="input-wrap">
+            <input id="email" name="email" type="text" class="field-input{% if error %} input-error{% endif %}"
+              placeholder="rahul.sharma@gmail.com"
+              value="{{ email_value or '' }}"
+              autocomplete="email"
+              autofocus/>
+          </div>
+          {% if error %}
+            <span class="field-hint" style="display:block;color:#DC2626;font-size:0.78rem;margin-top:0.3rem;">
+              {{ error }}
+            </span>
+          {% endif %}
+        </div>
+        <button type="submit" class="btn btn-blue">Send Reset Link</button>
+        <a href="{{ url_for('login') }}" class="btn btn-ghost">← Back to Sign In</a>
+      </form>
+
+      {% endif %}
+
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login — Smart Resume Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Styles.css') }}"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left"></div>
+    <a href="{{ url_for('login') }}" class="nav-brand">
+      <span class="nav-brand-text">Smart Resume <span>Analyzer</span></span>
+    </a>
+    <div class="nav-right"></div>
+  </nav>
+
+  <div class="page-center">
+    <div class="single-card adm-login">
+
+      <span class="adm-login-badge">Restricted Access</span>
+      <div class="form-title">Admin Panel</div>
+      <div class="form-sub">Authorised personnel only. All access is logged.</div>
+
+      <form method="POST" action="{{ url_for('admin_login_page') }}" class="fields" novalidate>
+
+        <div class="field">
+          <label class="field-label" for="username">Admin Username</label>
+          <div class="input-wrap">
+            <input id="username" name="username" type="text"
+              class="field-input{% if username_error %} input-err{% endif %}"
+              placeholder="admin"
+              value="{{ username_value or '' }}"
+              autocomplete="username"
+              oninput="clearLoginErr('username','hintAdminUser')"/>
+          </div>
+          <div class="field-hint{% if username_error %} err{% endif %}" id="hintAdminUser">{% if username_error %}{{ username_error }}{% endif %}</div>
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="password">Admin Password</label>
+          <div class="input-wrap">
+            <input id="password" name="password" type="password"
+              class="field-input has-btn{% if password_error %} input-err{% endif %}"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              oninput="clearLoginErr('password','hintAdminPw')"/>
+            <button type="button" class="show-pw-btn"
+              onclick="toggleVisibility('password', this)">Show</button>
+          </div>
+          <div class="field-hint{% if password_error %} err{% endif %}" id="hintAdminPw">{% if password_error %}{{ password_error }}{% endif %}</div>
+        </div>
+
+        <button type="submit" class="btn btn-blue">Access Admin Panel</button>
+        <a href="{{ url_for('login') }}" class="btn btn-ghost">&#8592; Back to Sign In</a>
+
+      </form>
+
+      <div class="adm-login-hint">
+        Demo: <code>admin</code> / <code>Admin@123</code>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+</body>
+</html>

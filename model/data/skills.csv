@@ -1,0 +1,805 @@
+skill_id,skill_name,category
+1,Python,Programming
+2,Java,Programming
+3,C,Programming
+4,C++,Programming
+5,C#,Programming
+6,JavaScript,Programming
+7,TypeScript,Programming
+8,Go,Programming
+9,Rust,Programming
+10,Kotlin,Programming
+11,Swift,Programming
+12,PHP,Programming
+13,Ruby,Programming
+14,Scala,Programming
+15,R,Programming
+16,MATLAB,Programming
+17,Perl,Programming
+18,Shell Scripting,Programming
+19,Bash,Programming
+20,PowerShell,Programming
+21,Assembly,Programming
+22,Dart,Programming
+23,Lua,Programming
+24,Julia,Programming
+25,Haskell,Programming
+26,Elixir,Programming
+27,Erlang,Programming
+28,Clojure,Programming
+29,F#,Programming
+30,COBOL,Programming
+31,Fortran,Programming
+32,SAS,Programming
+33,VBA,Programming
+34,Groovy,Programming
+35,Objective-C,Programming
+36,React,Web Frontend
+37,Angular,Web Frontend
+38,Vue.js,Web Frontend
+39,HTML,Web Frontend
+40,CSS,Web Frontend
+41,Sass,Web Frontend
+42,Bootstrap,Web Frontend
+43,Tailwind CSS,Web Frontend
+44,Next.js,Web Frontend
+45,Nuxt.js,Web Frontend
+46,jQuery,Web Frontend
+47,Redux,Web Frontend
+48,Webpack,Web Frontend
+49,Vite,Web Frontend
+50,GraphQL,Web Frontend
+51,Node.js,Web Backend
+52,Express.js,Web Backend
+53,Django,Web Backend
+54,Flask,Web Backend
+55,FastAPI,Web Backend
+56,Spring Boot,Web Backend
+57,Laravel,Web Backend
+58,Ruby on Rails,Web Backend
+59,ASP.NET,Web Backend
+60,NestJS,Web Backend
+61,REST API,Web Backend
+62,Microservices,Web Backend
+63,WebSockets,Web Backend
+64,gRPC,Web Backend
+65,MySQL,Database
+66,PostgreSQL,Database
+67,SQLite,Database
+68,Microsoft SQL Server,Database
+69,Oracle DB,Database
+70,MongoDB,Database
+71,Redis,Database
+72,Cassandra,Database
+73,DynamoDB,Database
+74,Elasticsearch,Database
+75,Firebase,Database
+76,Supabase,Database
+77,Neo4j,Database
+78,InfluxDB,Database
+79,CouchDB,Database
+80,SQL,Database
+81,AWS,Cloud
+82,Azure,Cloud
+83,Google Cloud,Cloud
+84,Docker,DevOps
+85,Kubernetes,DevOps
+86,Terraform,DevOps
+87,Ansible,DevOps
+88,Jenkins,DevOps
+89,GitHub Actions,DevOps
+90,GitLab CI,DevOps
+91,CircleCI,DevOps
+92,ArgoCD,DevOps
+93,Helm,DevOps
+94,Prometheus,DevOps
+95,Grafana,DevOps
+96,ELK Stack,DevOps
+97,Nginx,DevOps
+98,Apache,DevOps
+99,Linux,DevOps
+100,Git,DevOps
+101,TensorFlow,AI/ML
+102,PyTorch,AI/ML
+103,Scikit-learn,AI/ML
+104,Keras,AI/ML
+105,Hugging Face,AI/ML
+106,OpenCV,AI/ML
+107,NLTK,AI/ML
+108,SpaCy,AI/ML
+109,LangChain,AI/ML
+110,XGBoost,AI/ML
+111,LightGBM,AI/ML
+112,CatBoost,AI/ML
+113,Random Forest,AI/ML
+114,Neural Networks,AI/ML
+115,Deep Learning,AI/ML
+116,NLP,AI/ML
+117,Computer Vision,AI/ML
+118,Reinforcement Learning,AI/ML
+119,GANs,AI/ML
+120,Transformer Models,AI/ML
+121,BERT,AI/ML
+122,GPT,AI/ML
+123,Stable Diffusion,AI/ML
+124,MLflow,AI/ML
+125,Weights and Biases,AI/ML
+126,Pandas,Data Tools
+127,NumPy,Data Tools
+128,Apache Spark,Data Tools
+129,Hadoop,Data Tools
+130,Kafka,Data Tools
+131,Airflow,Data Tools
+132,dbt,Data Tools
+133,Tableau,Data Tools
+134,Power BI,Data Tools
+135,Looker,Data Tools
+136,Metabase,Data Tools
+137,Excel,Data Tools
+138,Google Sheets,Data Tools
+139,Jupyter,Data Tools
+140,Databricks,Data Tools
+141,Snowflake,Data Tools
+142,BigQuery,Data Tools
+143,Redshift,Data Tools
+144,Statistics,Data Tools
+145,Probability,Data Tools
+146,Data Visualization,Data Tools
+147,ETL,Data Tools
+148,Data Wrangling,Data Tools
+149,Feature Engineering,Data Tools
+150,A/B Testing,Data Tools
+151,React Native,Mobile
+152,Flutter,Mobile
+153,Android Development,Mobile
+154,iOS Development,Mobile
+155,Xamarin,Mobile
+156,Ionic,Mobile
+157,Firebase SDK,Mobile
+158,Play Store Deployment,Mobile
+159,App Store Deployment,Mobile
+160,Mobile UI/UX,Mobile
+161,Penetration Testing,Security
+162,Ethical Hacking,Security
+163,Network Security,Security
+164,OWASP,Security
+165,Cryptography,Security
+166,SIEM,Security
+167,Vulnerability Assessment,Security
+168,Firewalls,Security
+169,SOC Operations,Security
+170,ISO 27001,Security
+171,GDPR Compliance,Security
+172,Zero Trust Architecture,Security
+173,Photoshop,Design Tools
+174,Illustrator,Design Tools
+175,Figma,Design Tools
+176,Sketch,Design Tools
+177,Adobe XD,Design Tools
+178,InDesign,Design Tools
+179,After Effects,Design Tools
+180,Premiere Pro,Design Tools
+181,Lightroom,Design Tools
+182,Blender,Design Tools
+183,3ds Max,Design Tools
+184,AutoCAD,Design Tools
+185,Procreate,Design Tools
+186,Canva,Design Tools
+187,DaVinci Resolve,Design Tools
+188,Final Cut Pro,Design Tools
+189,Audacity,Design Tools
+190,CorelDRAW,Design Tools
+191,UI Design,Design Tools
+192,UX Research,Design Tools
+193,Wireframing,Design Tools
+194,Prototyping,Design Tools
+195,Typography,Design Tools
+196,Color Theory,Design Tools
+197,Brand Identity,Design Tools
+198,Motion Graphics,Design Tools
+199,Financial Modeling,Finance
+200,Valuation,Finance
+201,Investment Analysis,Finance
+202,Portfolio Management,Finance
+203,Risk Management,Finance
+204,Bloomberg Terminal,Finance
+205,QuickBooks,Finance
+206,SAP FICO,Finance
+207,Tally,Finance
+208,Zoho Books,Finance
+209,IFRS,Finance
+210,GAAP,Finance
+211,Tax Planning,Finance
+212,Auditing,Finance
+213,GST,Finance
+214,Financial Reporting,Finance
+215,Budgeting,Finance
+216,Treasury Management,Finance
+217,Credit Analysis,Finance
+218,Derivatives,Finance
+219,Equity Research,Finance
+220,Fixed Income,Finance
+221,Forex Trading,Finance
+222,Actuarial Science,Finance
+223,Insurance Underwriting,Finance
+224,Compliance,Finance
+225,KYC/AML,Finance
+226,Patient Care,Medical
+227,Clinical Research,Medical
+228,Pharmacology,Medical
+229,Medical Coding,Medical
+230,Electronic Health Records,Medical
+231,Anatomy,Medical
+232,Pathology,Medical
+233,Radiology,Medical
+234,Surgery,Medical
+235,Emergency Medicine,Medical
+236,Pediatrics,Medical
+237,Gynecology,Medical
+238,Oncology,Medical
+239,Cardiology,Medical
+240,Neurology,Medical
+241,Psychiatry,Medical
+242,Physiotherapy,Medical
+243,Occupational Therapy,Medical
+244,Nutrition,Medical
+245,Public Health,Medical
+246,Epidemiology,Medical
+247,Biostatistics,Medical
+248,Medical Writing,Medical
+249,FDA Regulations,Medical
+250,GCP Guidelines,Medical
+251,Nursing,Medical
+252,ICU Care,Medical
+253,Dental,Medical
+254,Ophthalmology,Medical
+255,Dermatology,Medical
+256,Ayurveda,Medical
+257,Homeopathy,Medical
+258,Lesson Planning,Teaching
+259,Classroom Management,Teaching
+260,Curriculum Development,Teaching
+261,Student Assessment,Teaching
+262,Special Needs Education,Teaching
+263,Online Teaching,Teaching
+264,LMS Platforms,Teaching
+265,Google Classroom,Teaching
+266,Zoom Teaching,Teaching
+267,Educational Psychology,Teaching
+268,Montessori Method,Teaching
+269,Child Development,Teaching
+270,STEM Teaching,Teaching
+271,Language Teaching,Teaching
+272,Coaching Techniques,Teaching
+273,Exam Preparation,Teaching
+274,Academic Administration,Teaching
+275,School Management,Teaching
+276,Corporate Training,Teaching
+277,Instructional Design,Teaching
+278,E-Learning Development,Teaching
+279,Bloom's Taxonomy,Teaching
+280,Differentiated Instruction,Teaching
+281,IB Curriculum,Teaching
+282,CBSE Curriculum,Teaching
+283,Physical Education,Teaching
+284,Sports Coaching,Teaching
+285,Music Education,Teaching
+286,SEO,Marketing
+287,SEM,Marketing
+288,Google Ads,Marketing
+289,Facebook Ads,Marketing
+290,Instagram Marketing,Marketing
+291,Content Marketing,Marketing
+292,Email Marketing,Marketing
+293,HubSpot,Marketing
+294,Salesforce,Marketing
+295,Mailchimp,Marketing
+296,Social Media Management,Marketing
+297,Influencer Marketing,Marketing
+298,Brand Management,Marketing
+299,Market Research,Marketing
+300,Consumer Behavior,Marketing
+301,Copywriting,Marketing
+302,PR and Communications,Marketing
+303,Event Marketing,Marketing
+304,Performance Marketing,Marketing
+305,Affiliate Marketing,Marketing
+306,CRM,Marketing
+307,Product Marketing,Marketing
+308,Video Marketing,Marketing
+309,Podcast Marketing,Marketing
+310,Growth Hacking,Marketing
+312,SolidWorks,Engineering
+313,ANSYS,Engineering
+314,CATIA,Engineering
+315,Revit,Engineering
+316,Civil 3D,Engineering
+317,PLC Programming,Engineering
+318,SCADA,Engineering
+319,Circuit Design,Engineering
+320,PCB Design,Engineering
+321,Embedded Systems,Engineering
+322,MATLAB Simulink,Engineering
+323,Structural Analysis,Engineering
+324,Geotechnical Engineering,Engineering
+325,Surveying,Engineering
+326,Construction Management,Engineering
+327,Quantity Surveying,Engineering
+328,HVAC Design,Engineering
+329,MEP Engineering,Engineering
+330,Electrical Design,Engineering
+331,Power Systems,Engineering
+332,Control Systems,Engineering
+333,Robotics,Engineering
+334,CNC Machining,Engineering
+335,Lean Manufacturing,Engineering
+336,Six Sigma,Engineering
+337,Quality Control,Engineering
+338,NDT Testing,Engineering
+339,Welding,Engineering
+340,Piping Design,Engineering
+341,Process Engineering,Engineering
+342,Chemical Engineering,Engineering
+343,Material Science,Engineering
+344,Thermodynamics,Engineering
+345,Fluid Mechanics,Engineering
+346,Recruitment,HR
+347,Talent Acquisition,HR
+348,Onboarding,HR
+349,Performance Management,HR
+350,Employee Relations,HR
+351,Payroll,HR
+352,HRIS,HR
+353,SAP HR,HR
+354,Workday,HR
+355,BambooHR,HR
+356,Labor Law,HR
+357,Compensation and Benefits,HR
+358,Diversity and Inclusion,HR
+359,Organizational Development,HR
+360,Training and Development,HR
+361,Change Management,HR
+362,Succession Planning,HR
+363,HR Analytics,HR
+364,Employee Engagement,HR
+365,Project Management,Management
+366,Agile,Management
+367,Scrum,Management
+368,PMP,Management
+369,PRINCE2,Management
+370,Jira,Management
+371,Confluence,Management
+372,Trello,Management
+373,Strategic Planning,Management
+374,Business Analysis,Management
+375,Stakeholder Management,Management
+376,Contract Law,Legal
+377,Corporate Law,Legal
+378,Criminal Law,Legal
+379,Civil Litigation,Legal
+380,Intellectual Property,Legal
+381,Tax Law,Legal
+382,Labour Law,Legal
+383,Constitutional Law,Legal
+384,International Law,Legal
+385,Legal Research,Legal
+386,Legal Drafting,Legal
+387,Court Procedures,Legal
+388,Arbitration,Legal
+389,Mediation,Legal
+390,Mergers and Acquisitions,Legal
+391,Compliance Management,Legal
+392,Data Privacy Law,Legal
+393,Real Estate Law,Legal
+394,Family Law,Legal
+395,Immigration Law,Legal
+396,Journalism,Media
+397,News Writing,Media
+398,Editing,Media
+399,Video Production,Media
+400,Photography,Media
+401,Broadcast Journalism,Media
+402,Scriptwriting,Media
+403,Podcasting,Media
+404,Documentary Making,Media
+405,Social Media Content,Media
+406,Public Relations,Media
+407,Interviewing,Media
+408,Fact Checking,Media
+409,Investigative Journalism,Media
+410,Digital Media,Media
+411,Content Strategy,Media
+412,Blogging,Media
+413,Technical Writing,Media
+414,Proofreading,Media
+415,Adobe Premiere,Media
+416,Studio Recording,Media
+417,Hotel Management,Hospitality
+418,Front Office Operations,Hospitality
+419,Food and Beverage,Hospitality
+420,Housekeeping,Hospitality
+421,Event Planning,Hospitality
+422,Tourism Management,Hospitality
+423,Travel Planning,Hospitality
+424,Customer Service,Hospitality
+425,Revenue Management,Hospitality
+426,Property Management System,Hospitality
+427,Culinary Arts,Hospitality
+428,Bartending,Hospitality
+429,Catering Management,Hospitality
+430,Tour Operations,Hospitality
+431,Airline Operations,Hospitality
+432,Cruise Management,Hospitality
+433,Crop Science,Agriculture
+434,Soil Science,Agriculture
+435,Irrigation Management,Agriculture
+436,Pest Management,Agriculture
+437,Agricultural Extension,Agriculture
+438,GIS Mapping,Agriculture
+439,Remote Sensing,Agriculture
+440,Environmental Impact Assessment,Agriculture
+441,Waste Management,Agriculture
+442,Water Resource Management,Agriculture
+443,Forestry,Agriculture
+444,Wildlife Management,Agriculture
+445,Climate Science,Agriculture
+446,Organic Farming,Agriculture
+447,Hydroponics,Agriculture
+448,Agribusiness,Agriculture
+449,Public Administration,Govt
+450,Policy Analysis,Govt
+451,Government Relations,Govt
+452,UPSC Preparation,Govt
+453,RTI,Govt
+454,E-Governance,Govt
+455,Public Finance,Govt
+456,Urban Planning,Govt
+457,Disaster Management,Govt
+458,Defence Studies,Govt
+459,Intelligence Analysis,Govt
+460,Municipal Administration,Govt
+461,Athletic Training,Sports
+462,Strength and Conditioning,Sports
+463,Sports Nutrition,Sports
+464,Sports Psychology,Sports
+465,Game Strategy,Sports
+466,Fitness Assessment,Sports
+467,Personal Training,Sports
+468,Yoga,Sports
+469,Sports Medicine,Sports
+470,Team Management,Sports
+471,Sports Analytics,Sports
+472,Referee Training,Sports
+473,Community Development,Social Work
+474,Social Research,Social Work
+475,Case Management,Social Work
+476,Child Protection,Social Work
+477,Counselling,Social Work
+478,NGO Management,Social Work
+479,Grant Writing,Social Work
+480,Advocacy,Social Work
+481,Rural Development,Social Work
+482,Fundraising,Social Work
+483,Communication,Soft Skills
+484,Leadership,Soft Skills
+485,Teamwork,Soft Skills
+486,Problem Solving,Soft Skills
+487,Critical Thinking,Soft Skills
+488,Time Management,Soft Skills
+489,Adaptability,Soft Skills
+490,Emotional Intelligence,Soft Skills
+491,Negotiation,Soft Skills
+492,Presentation Skills,Soft Skills
+493,Conflict Resolution,Soft Skills
+494,Decision Making,Soft Skills
+495,Mentoring,Soft Skills
+496,Research Skills,Soft Skills
+497,Analytical Thinking,Soft Skills
+498,Creativity,Soft Skills
+499,Attention to Detail,Soft Skills
+500,Multitasking,Soft Skills
+501,Manual Testing,QA
+502,Selenium,QA
+503,Jest,QA
+504,Cypress,QA
+505,Postman,QA
+506,JUnit,QA
+507,TestNG,QA
+508,Load Testing,QA
+509,API Testing,QA
+510,Test Case Writing,QA
+511,Solidity,Blockchain
+512,Ethereum,Blockchain
+513,Smart Contracts,Blockchain
+514,Web3.js,Blockchain
+515,DeFi,Blockchain
+516,NFTs,Blockchain
+517,Hyperledger,Blockchain
+518,Unity,Game Dev
+519,Unreal Engine,Game Dev
+520,Game Design,Game Dev
+521,3D Modeling,Game Dev
+522,Game Physics,Game Dev
+523,Multiplayer Networking,Game Dev
+524,AR/VR Development,Game Dev
+525,System Design,IT
+526,Design Patterns,IT
+527,Data Structures,IT
+528,Algorithms,IT
+529,Operating Systems,IT
+530,Computer Networks,IT
+531,Compiler Design,IT
+532,IoT,IT
+533,Edge Computing,IT
+534,Serverless,IT
+535,API Gateway,IT
+536,Message Queues,IT
+537,RabbitMQ,IT
+538,Apache Kafka,IT
+539,Machine Learning,AI/ML
+540,SciPy,Data Science
+541,Seaborn,Data Science
+542,Plotly,Data Science
+543,Matplotlib,Data Science
+544,D3.js,Frontend
+545,Kubeflow,MLOps
+546,DVC,MLOps
+547,MLOps,MLOps
+548,SHAP,AI/ML
+549,LIME,AI/ML
+550,SPSS,Data Science
+551,YAML,DevOps
+552,CI/CD,DevOps
+553,GitLab,DevOps
+554,GCP,Cloud
+555,Azure ML,Cloud
+556,SageMaker,Cloud
+557,Vertex AI,Cloud
+558,AWS SageMaker,Cloud
+559,NCERT,Teaching
+560,ICSE Curriculum,Teaching
+561,State Board,Teaching
+562,NEP 2020,Teaching
+563,Activity Based Learning,Teaching
+564,Experiential Learning,Teaching
+565,Parent Communication,Teaching
+566,Remedial Teaching,Teaching
+567,Co-curricular Activities,Teaching
+568,Value Education,Teaching
+569,Formative Assessment,Teaching
+570,Summative Assessment,Teaching
+571,Portfolio Assessment,Teaching
+572,Project Based Learning,Teaching
+573,Collaborative Learning,Teaching
+574,Inquiry Based Learning,Teaching
+575,IB PYP,Teaching
+576,IB MYP,Teaching
+577,Cambridge Curriculum,Teaching
+578,IGCSE,Teaching
+579,Hindi Teaching,Teaching
+580,Regional Language Teaching,Teaching
+581,DIKSHA,Teaching
+582,Smart Board,Teaching
+583,Google Meet,Soft Skills
+584,Microsoft Teams,Soft Skills
+585,Kahoot,Teaching
+586,Quizizz,Teaching
+587,Algebra,Teaching-Subject
+588,Geometry,Teaching-Subject
+589,Trigonometry,Teaching-Subject
+590,Calculus,Teaching-Subject
+591,Number Theory,Teaching-Subject
+592,Mathematics,Teaching-Subject
+593,Mental Mathematics,Teaching-Subject
+594,Vedic Mathematics,Teaching-Subject
+595,Physics,Teaching-Subject
+596,Chemistry,Teaching-Subject
+597,Biology,Teaching-Subject
+598,Lab Management,Teaching-Subject
+599,Science Experiments,Teaching-Subject
+600,Environmental Science,Teaching-Subject
+601,Life Sciences,Teaching-Subject
+602,Earth Sciences,Teaching-Subject
+603,Grammar,Teaching-Subject
+604,Literature,Teaching-Subject
+605,Creative Writing,Teaching-Subject
+606,Reading Comprehension,Teaching-Subject
+607,Phonics,Teaching-Subject
+608,Spoken English,Teaching-Subject
+609,Writing Skills,Teaching-Subject
+610,Literary Analysis,Teaching-Subject
+611,Prose and Poetry,Teaching-Subject
+612,English Literature,Teaching-Subject
+613,Hindi Grammar,Teaching-Subject
+614,Hindi Literature,Teaching-Subject
+615,Devanagari Script,Teaching-Subject
+616,Vyakaran,Teaching-Subject
+617,Hindi Prose,Teaching-Subject
+618,Hindi Poetry,Teaching-Subject
+619,Sanskrit Grammar,Teaching-Subject
+620,Sanskrit Literature,Teaching-Subject
+621,Vedic Studies,Teaching-Subject
+622,Shlokas,Teaching-Subject
+623,Sanskrit Prose,Teaching-Subject
+624,History,Teaching-Subject
+625,Geography,Teaching-Subject
+626,Civics,Teaching-Subject
+627,Political Science,Teaching-Subject
+628,Economics Teaching,Teaching-Subject
+629,Map Reading,Teaching-Subject
+630,Current Affairs,Teaching-Subject
+631,Programming,Teaching-Subject
+632,Database Management,Teaching-Subject
+633,Networking Basics,Teaching-Subject
+634,Web Technologies,Teaching-Subject
+635,Computer Fundamentals,Teaching-Subject
+636,MS Office,Teaching-Subject
+637,Football Coaching,Teaching-Subject
+638,Cricket Coaching,Teaching-Subject
+639,Kabaddi,Teaching-Subject
+640,Yoga Teaching,Teaching-Subject
+641,Athletics,Teaching-Subject
+642,Swimming,Teaching-Subject
+643,Drawing,Teaching-Subject
+644,Painting,Teaching-Subject
+645,Sculpture,Teaching-Subject
+646,Craft Work,Teaching-Subject
+647,Fine Arts,Teaching-Subject
+648,Visual Arts,Teaching-Subject
+649,Carnatic Music,Teaching-Subject
+650,Hindustani Music,Teaching-Subject
+651,Music Theory,Teaching-Subject
+652,Keyboard,Teaching-Subject
+653,Tabla,Teaching-Subject
+654,Vocal Training,Teaching-Subject
+655,Accountancy,Teaching-Subject
+656,Business Studies,Teaching-Subject
+657,Commerce,Teaching-Subject
+658,Book Keeping,Teaching-Subject
+659,Facilitation,Teaching
+660,Needs Assessment,Teaching
+661,Soft Skills Training,Teaching
+662,Hands-on Training,Teaching
+663,Safety Training,Teaching
+664,Digital Content Creation,Teaching
+665,Storyboarding,Teaching
+666,Multimedia Design,Teaching
+667,Learning Objectives,Teaching
+668,Content Mapping,Teaching
+669,Assessment Design,Teaching
+670,Subject Matter Expertise,Teaching
+671,Content Development,Teaching
+672,Feedback and Assessment,Teaching
+673,Gamification,Teaching
+674,SCORM,Teaching
+675,Articulate Storyline,Teaching
+676,Adobe Captivate,Teaching
+677,Teacher Training,Teaching
+678,Team Building,Teaching
+679,Sales Training,Business
+680,Lead Generation,Business
+681,Objection Handling,Business
+682,Sales Analytics,Business
+684,Staff Management,Management
+685,Policy Implementation,Management
+686,Budget Management,Management
+687,Stakeholder Communication,Management
+688,Regulatory Compliance,Management
+689,Performance Appraisal,Management
+690,Crisis Management,Management
+691,Timetabling,Management
+692,Accreditation,Management
+693,Faculty Management,Management
+694,Research Oversight,Management
+695,Department Management,Management
+696,Exam Coordination,Management
+697,Student Records Management,Management
+698,Staff Training,Management
+699,Reporting,Management
+700,IT Support,IT
+701,Data Analytics,Data Science
+702,Academic Writing,Teaching
+703,Publication,Teaching
+704,Conference Presentations,Teaching
+705,Industry Collaboration,Teaching
+706,PhD Supervision,Teaching
+707,Educational Research,Teaching
+708,Statistical Analysis,Data Science
+709,Data Collection,Teaching
+710,Literature Review,Teaching
+711,Qualitative Research,Teaching
+712,Quantitative Research,Teaching
+713,Survey Design,Teaching
+714,Quantitative Aptitude,Teaching-Subject
+715,Logical Reasoning,Teaching-Subject
+716,Career Counselling,Teaching
+717,Aptitude Assessment,Teaching
+718,Psychometric Testing,Teaching
+719,Resume Writing,Soft Skills
+720,Interview Skills,Soft Skills
+721,Psychological Assessment,Teaching
+722,Crisis Intervention,Teaching
+723,Grief Counselling,Teaching
+724,Cognitive Behavioral Therapy,Teaching
+725,Behavioral Intervention,Teaching
+726,Individualized Education Plan,Teaching
+727,Autism Spectrum Support,Teaching
+728,Applied Behavior Analysis,Teaching
+729,Social Skills Training,Teaching
+730,Augmentative Communication,Teaching
+731,Play Therapy,Teaching
+732,Learning Disability Assessment,Teaching
+733,Dyslexia Support,Teaching
+734,Inclusive Education,Teaching
+735,Sensory Integration,Teaching
+736,Sign Language,Teaching
+737,Cognitive Assessment,Teaching
+738,Speech Therapy,Teaching
+739,Language Disorders,Teaching
+740,Articulation Therapy,Teaching
+741,Audiology Basics,Teaching
+742,Play-Based Learning,Teaching
+743,Fine Motor Skills,Teaching
+744,Sensory Learning,Teaching
+745,Storytelling,Teaching
+746,Prepared Environment,Teaching
+747,First Aid,Teaching
+748,Breathing Techniques,Teaching-Subject
+749,Meditation,Teaching-Subject
+750,Ayurveda Basics,Teaching-Subject
+751,Injury Prevention,Teaching-Subject
+752,Mindfulness,Teaching-Subject
+753,YouTube SEO,Marketing
+754,Public Speaking,Soft Skills
+755,Graphic Design,Design Tools
+756,Essay Writing,Teaching-Subject
+757,Comprehension,Teaching-Subject
+758,Lab Safety,Teaching-Subject
+759,Bharatanatyam,Teaching-Subject
+760,Classical Dance,Teaching-Subject
+761,Folk Dance,Teaching-Subject
+762,Choreography,Teaching-Subject
+763,Gross Motor Skills,Teaching-Subject
+764,OOP,IT
+765,Testing,IT
+766,Responsive Design,IT
+767,UI/UX,Design
+768,JWT,IT
+769,Forecasting,Finance
+770,PowerPoint,Soft Skills
+771,Accounting,Finance
+772,Data Analysis,Data Tools
+773,Econometrics,Finance
+774,Stochastic Calculus,Finance
+775,HR Policies,HR
+776,HRMS,HR
+777,Sourcing,HR
+778,LinkedIn Recruiting,HR
+779,ATS,HR
+780,Employer Branding,HR
+781,Boolean Search,HR
+782,Campus Recruitment,HR
+784,Analytics,Marketing
+785,Digital Marketing,Marketing
+786,Google Analytics,Marketing
+787,Marketing Automation,Marketing
+788,Programmatic Advertising,Marketing
+789,Keyword Research,Marketing
+790,On-Page SEO,Marketing
+791,Link Building,Marketing
+792,Google Search Console,Marketing
+793,Technical SEO,Marketing
+794,WordPress,Marketing
+795,Backlink Analysis,Marketing
+796,Screaming Frog,Marketing
+797,Ahrefs,Marketing
+798,SEMrush,Marketing
+799,Business Intelligence,Data Tools
+801,ONNX,IT
+804,API Development,IT
+
+805,JAVAFX,Programming
+806,cleaning,Social Work
+807,building,Social Work
+808,vibe coding,Programming
+809,THINGS ARRANGEMENT,Hospitality

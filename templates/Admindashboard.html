@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard — Smart Resume Analyzer</title>
+  <link rel="icon" type="image/x-icon"       href="{{ url_for('static', filename='img/favicon.ico') }}"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}"/>
+  <link rel="apple-touch-icon" sizes="180x180"    href="{{ url_for('static', filename='img/apple-touch-icon.png') }}"/>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Styles.css') }}"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left"></div>
+    <a href="/admin/dashboard" class="nav-brand">
+      <span class="nav-brand-text">Smart Resume <span>Analyzer</span></span>
+    </a>
+    <div class="nav-right">
+      <span class="nav-greeting">Admin: <strong>{{ current_admin }}</strong></span>
+      <a href="/admin/logout" class="nav-logout">Log Out</a>
+    </div>
+  </nav>
+
+  <div class="ad-wrap">
+
+    <!-- ── Stat cards ──────────────────────────────────── -->
+    <div class="ad-stats">
+
+      {% set ns = namespace(students=0, professionals=0) %}
+      {% for u in users %}
+        {% if u.role == 'student'      %}{% set ns.students      = ns.students      + 1 %}{% endif %}
+        {% if u.role == 'professional' %}{% set ns.professionals = ns.professionals + 1 %}{% endif %}
+      {% endfor %}
+
+      <div class="ad-stat">
+        <div class="ad-stat-icon">👥</div>
+        <div class="ad-stat-num">{{ users|length }}</div>
+        <div class="ad-stat-label">Registered Users</div>
+      </div>
+      <div class="ad-stat c-indigo">
+        <div class="ad-stat-icon">🎓</div>
+        <div class="ad-stat-num">{{ ns.students }}</div>
+        <div class="ad-stat-label">Students</div>
+      </div>
+      <div class="ad-stat c-coral">
+        <div class="ad-stat-icon">💼</div>
+        <div class="ad-stat-num">{{ ns.professionals }}</div>
+        <div class="ad-stat-label">Professionals</div>
+      </div>
+      <div class="ad-stat">
+        <div class="ad-stat-icon">📊</div>
+        <div class="ad-stat-num">{{ stats.total_analyses }}</div>
+        <div class="ad-stat-label">Total Analyses</div>
+      </div>
+      <div class="ad-stat c-indigo">
+        <div class="ad-stat-icon">⭐</div>
+        <div class="ad-stat-num">{{ stats.avg_readiness }}%</div>
+        <div class="ad-stat-label">Avg Readiness Score</div>
+      </div>
+      <div class="ad-stat c-coral">
+        <div class="ad-stat-icon">🏆</div>
+        <div class="ad-stat-num ad-stat-role" title="{{ stats.top_role_name }}">
+          {{ stats.top_role_name }}
+        </div>
+        <div class="ad-stat-label">Top Analysed Role</div>
+      </div>
+
+    </div>
+
+    <!-- ── Recent analyses ─────────────────────────────── -->
+    <div class="ad-sec">
+      <div class="ad-sec-title">Recent Analyses</div>
+      <div class="ad-sec-sub">Last 20 analyses across all users</div>
+    </div>
+
+    <div class="ad-tbl-wrap" style="margin-bottom:2rem">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>User</th>
+            <th>Role Analysed</th>
+            <th>Score</th>
+            <th>Date</th>
+            <th>Report</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if recent_analyses %}
+            {% for a in recent_analyses %}
+            <tr>
+              <td class="ad-td-muted">{{ a.id }}</td>
+              <td>
+                <strong>{{ a.full_name }}</strong>
+                <span class="ad-td-sub"> @{{ a.username }}</span>
+              </td>
+              <td>{{ a.role_name }}</td>
+              <td>
+                {% if a.readiness_score >= 70 %}
+                  <span class="ad-score-pill ad-score-strong">{{ a.readiness_score }}%</span>
+                {% elif a.readiness_score >= 40 %}
+                  <span class="ad-score-pill ad-score-mid">{{ a.readiness_score }}%</span>
+                {% else %}
+                  <span class="ad-score-pill ad-score-low">{{ a.readiness_score }}%</span>
+                {% endif %}
+              </td>
+              <td class="ad-td-muted">{{ a.created_at[:10] }}</td>
+              <td>
+                {% if a.report_path %}
+                  <a href="/report/{{ a.id }}" class="ad-dl-btn" title="Download">⬇</a>
+                {% else %}
+                  <span class="ad-td-muted">—</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr><td colspan="6" class="ad-tbl-empty">No analyses yet.</td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Users table ─────────────────────────────────── -->
+    <div class="ad-sec">
+      <div class="ad-sec-title">Registered Users</div>
+      <div class="ad-sec-sub">Click Delete to permanently remove a user and all their data</div>
+    </div>
+
+    <div class="ad-tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Full Name</th><th>Username</th><th>Email</th>
+            <th>Phone</th><th>Role</th><th>Registered</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="usersBody">
+          {% if users %}
+            {% for u in users %}
+            <tr id="user-row-{{ u.id }}">
+              <td class="ad-td-muted">{{ u.id }}</td>
+              <td><strong>{{ u.full_name }}</strong></td>
+              <td class="ad-td-sub">{{ u.username }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.phone if u.phone else '—' }}</td>
+              <td>
+                {% if u.role == 'professional' %}
+                  <span class="ad-pill ad-pill-coral">Professional</span>
+                {% else %}
+                  <span class="ad-pill ad-pill-indigo">Student</span>
+                {% endif %}
+              </td>
+              <td class="ad-td-muted">{{ u.created_at[:10] }}</td>
+              <td>
+                <button class="ad-btn-del"
+                  data-uid="{{ u.id }}" data-uname="{{ u.full_name | e }}"
+                  onclick="handleDeleteUser(this)">Delete</button>
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr><td colspan="8" class="ad-tbl-empty">No users registered yet.</td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Add Admin ────────────────────────────────────── -->
+    <div class="ad-sec" style="margin-top:2rem">
+      <div class="ad-sec-title">Add New Admin</div>
+      <div class="ad-sec-sub">New admin can log in and manage this dashboard</div>
+    </div>
+
+    <div class="ad-form-card">
+      <div id="addAdminAlert" class="alert" style="margin-bottom:.9rem"></div>
+      <div class="ad-form-row">
+        <div>
+          <label class="field-label" for="newAdminUser">Username</label>
+          <input id="newAdminUser" type="text" class="field-input"
+            placeholder="newadmin" autocomplete="off"/>
+        </div>
+        <div>
+          <label class="field-label" for="newAdminPw">Password</label>
+          <div class="input-wrap">
+            <input id="newAdminPw" type="password" class="field-input has-btn"
+              placeholder="Min 8 chars, A-Z, 0-9, symbol"/>
+            <button type="button" class="show-pw-btn"
+              onclick="toggleVisibility('newAdminPw', this)">Show</button>
+          </div>
+        </div>
+        <button class="ad-btn-add" onclick="handleAddAdmin()">Add Admin</button>
+      </div>
+    </div>
+
+    <!-- ── Admins table ─────────────────────────────────── -->
+    <div class="ad-sec" style="margin-top:2rem">
+      <div class="ad-sec-title">Admin Accounts</div>
+      <div class="ad-sec-sub">You cannot remove your own account or the last remaining admin</div>
+    </div>
+
+    <div class="ad-tbl-wrap" style="margin-bottom:3rem">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Username</th><th>Action</th></tr>
+        </thead>
+        <tbody id="adminsBody">
+          {% for a in admins %}
+          <tr id="admin-row-{{ a.id }}">
+            <td class="ad-td-muted">{{ a.id }}</td>
+            <td>
+              <strong>{{ a.username }}</strong>
+              {% if a.username == current_admin %}
+                <span class="ad-pill ad-pill-you">You</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if a.username != current_admin %}
+                <button class="ad-btn-del"
+                  data-aid="{{ a.id }}" data-aname="{{ a.username | e }}"
+                  onclick="handleDeleteAdmin(this)">Remove</button>
+              {% else %}
+                <span class="ad-td-muted">—</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /ad-wrap -->
+
+  <!-- ═══════════════════════════════════════════════════
+       Data Manager — Skills & Roles
+  ════════════════════════════════════════════════════ -->
+  <div class="ad-wrap" style="margin-top:0;padding-bottom:3rem">
+
+    <div class="ad-sec" style="margin-top:1rem">
+      <div class="ad-sec-title">Data Manager</div>
+      <div class="ad-sec-sub">Manage skills and roles in the CSV files — changes are visible immediately and can be synced to the live database</div>
+    </div>
+
+    <!-- Sync bar -->
+    <div class="dm-syncbar">
+      <div class="dm-syncbar-left">
+        <div class="dm-syncbar-title">📦 Sync CSV → Database</div>
+        <div class="dm-syncbar-sub" id="dmSyncStatus">Make changes below then click Sync to push them to the live analyser</div>
+      </div>
+      <button class="dm-sync-btn" id="dmSyncBtn" onclick="dmSync()">⟳ Sync to DB</button>
+    </div>
+    <div id="dmSyncAlert" class="alert" style="margin-bottom:1rem"></div>
+
+    <!-- Tab bar -->
+    <div class="dm-tabs">
+      <button class="dm-tab active" id="dmTabSkills" onclick="dmTab('skills')">🛠 Skills Library</button>
+      <button class="dm-tab"        id="dmTabRoles"  onclick="dmTab('roles')">🎯 Job Roles</button>
+    </div>
+
+    <!-- ══════════════ SKILLS PANEL ══════════════ -->
+    <div id="dmSkillsPanel" class="dm-panel">
+
+      <!-- Add skill form -->
+      <div class="dm-form-card">
+        <div class="dm-form-card-title">Add New Skill</div>
+        <div id="dmAddSkillAlert" class="alert" style="margin-bottom:.6rem"></div>
+        <div class="dm-form-row">
+          <div class="dm-field" style="flex:2">
+            <label class="field-label">Skill Name</label>
+            <input id="dmSkillName" type="text" class="field-input" placeholder="e.g. LangChain"
+              autocomplete="off" onkeydown="if(event.key==='Enter')dmAddSkill()"/>
+          </div>
+          <div class="dm-field" style="flex:1.4">
+            <label class="field-label">Category</label>
+            <select id="dmSkillCat" class="field-input">
+              <option value="">— select —</option>
+              <option>AI/ML</option><option>Agriculture</option><option>Blockchain</option>
+              <option>Business</option><option>Cloud</option><option>Data Science</option>
+              <option>Data Tools</option><option>Database</option><option>Design</option>
+              <option>Design Tools</option><option>DevOps</option><option>Engineering</option>
+              <option>Finance</option><option>Game Dev</option><option>Govt</option>
+              <option>HR</option><option>Hospitality</option><option>IT</option>
+              <option>Legal</option><option>MLOps</option><option>Management</option>
+              <option>Marketing</option><option>Media</option><option>Medical</option>
+              <option>Mobile</option><option>Programming</option><option>QA</option>
+              <option>Security</option><option>Social Work</option><option>Soft Skills</option>
+              <option>Sports</option><option>Teaching</option><option>Teaching-Subject</option>
+              <option>Web Backend</option><option>Web Frontend</option>
+            </select>
+          </div>
+          <div class="dm-field-btn">
+            <label class="field-label">&nbsp;</label>
+            <button class="btn-add-sm" onclick="dmAddSkill()">+ Add Skill</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills table -->
+      <div class="dm-table-card">
+        <div class="dm-table-toolbar">
+          <input id="dmSkillSearch" type="text" class="dm-search"
+            placeholder="🔍 Search by name or category…"
+            oninput="dmFilterSkills(this.value)" autocomplete="off"/>
+          <span class="dm-count-badge" id="dmSkillCount">— skills</span>
+        </div>
+        <div class="dm-hint">💡 Note the <b>ID</b> column — you'll need it when assigning skills to roles</div>
+        <div class="dm-tbl-wrap">
+          <table class="dm-tbl">
+            <thead>
+              <tr>
+                <th style="width:55px">ID</th>
+                <th>Skill Name</th>
+                <th>Category</th>
+              </tr>
+            </thead>
+            <tbody id="dmSkillsTbody">
+              <tr><td colspan="3" class="dm-loading">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /dmSkillsPanel -->
+
+    <!-- ══════════════ ROLES PANEL ══════════════ -->
+    <div id="dmRolesPanel" class="dm-panel" style="display:none">
+
+      <!-- Add role form -->
+      <div class="dm-form-card">
+        <div class="dm-form-card-title">Add New Role</div>
+        <div id="dmAddRoleAlert" class="alert" style="margin-bottom:.6rem"></div>
+        <div class="dm-form-row">
+          <div class="dm-field" style="flex:2">
+            <label class="field-label">Role Name</label>
+            <input id="dmRoleName" type="text" class="field-input" placeholder="e.g. Prompt Engineer"
+              autocomplete="off"/>
+          </div>
+          <div class="dm-field" style="flex:1.4">
+            <label class="field-label">Category</label>
+            <select id="dmRoleCat" class="field-input">
+              <option value="">— select —</option>
+              <option>Agriculture</option><option>Data/AI/ML</option><option>Design</option>
+              <option>Engineering</option><option>Finance</option><option>Govt</option>
+              <option>HR/Management</option><option>Healthcare</option><option>Hospitality</option>
+              <option>IT/Software</option><option>Legal</option><option>Marketing</option>
+              <option>Media</option><option>Social Work</option><option>Sports</option>
+              <option>Teaching</option>
+            </select>
+          </div>
+          <div class="dm-field-btn">
+            <label class="field-label">&nbsp;</label>
+            <button class="btn-add-sm" onclick="dmShowAddRole()">Next: Add Skills →</button>
+          </div>
+        </div>
+
+        <!-- Skill assignment (shown after filling role details) -->
+        <div id="dmRoleSkillsSection" style="display:none">
+          <div class="dm-skill-assign-head">Assign Skills to this Role</div>
+
+          <!-- Search autocomplete -->
+          <div class="dm-skill-row">
+            <div class="dm-ac-wrap">
+              <input id="dmRoleSkillSearch" type="text" class="field-input"
+                placeholder="🔍 Type skill name to search…" autocomplete="off"
+                oninput="dmSkillAc(this.value,'add')"/>
+              <div id="dmRoleSkillAcList" class="dm-ac-list" style="display:none"></div>
+            </div>
+            <select id="dmRoleSkillImp" class="field-input dm-imp-sel">
+              <option value="core">Core</option>
+              <option value="secondary">Secondary</option>
+              <option value="bonus">Bonus</option>
+            </select>
+            <button class="btn-add-sm" onclick="dmAddChip('add')">+ Add</button>
+          </div>
+
+          <!-- ID entry shortcut -->
+          <div class="dm-id-row">
+            <span class="dm-id-label">Or enter IDs:</span>
+            <input id="dmRoleSkillIds" type="text" class="field-input dm-id-input"
+              placeholder="101:core, 205:secondary, 308:bonus"
+              style="font-family:monospace;font-size:.82rem"/>
+            <button class="dm-ghost-btn" onclick="dmParseIds('add')">Parse</button>
+          </div>
+
+          <!-- Chips -->
+          <div id="dmAddChipsWrap" class="dm-chips-grid" style="display:none">
+            <div class="dm-chips-col">
+              <div class="dm-chips-col-label dm-col-core">● Core</div>
+              <div id="dmAddCoreChips" class="dm-chips-col-body"></div>
+            </div>
+            <div class="dm-chips-col">
+              <div class="dm-chips-col-label dm-col-sec">● Secondary</div>
+              <div id="dmAddSecChips" class="dm-chips-col-body"></div>
+            </div>
+            <div class="dm-chips-col">
+              <div class="dm-chips-col-label dm-col-bonus">● Bonus</div>
+              <div id="dmAddBonusChips" class="dm-chips-col-body"></div>
+            </div>
+          </div>
+          <div class="dm-chip-count" id="dmAddChipCount"></div>
+
+          <button class="dm-save-role-btn" onclick="dmSaveRole()">✓ Save Role & Skills to CSV</button>
+        </div>
+      </div>
+
+      <!-- Roles table -->
+      <div class="dm-table-card">
+        <div class="dm-table-toolbar">
+          <input id="dmRoleSearch" type="text" class="dm-search"
+            placeholder="🔍 Search roles…"
+            oninput="dmFilterRoles(this.value)" autocomplete="off"/>
+          <span class="dm-count-badge" id="dmRoleCount">— roles</span>
+        </div>
+        <div class="dm-tbl-wrap">
+          <table class="dm-tbl">
+            <thead>
+              <tr>
+                <th style="width:50px">ID</th>
+                <th>Role Name</th>
+                <th style="width:130px">Category</th>
+                <th style="width:90px"></th>
+              </tr>
+            </thead>
+            <tbody id="dmRolesTbody">
+              <tr><td colspan="4" class="dm-loading">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Edit role skills inline panel -->
+      <div id="dmEditPanel" class="dm-edit-panel" style="display:none">
+        <div class="dm-edit-head">
+          <div>
+            <span class="dm-edit-label">Editing skills for:</span>
+            <span class="dm-edit-name" id="dmEditRoleName">—</span>
+            <span class="dm-edit-cat" id="dmEditRoleCat"></span>
+          </div>
+          <button class="adm-rs-close-btn" onclick="dmCloseEdit()">✕ Close</button>
+        </div>
+        <div id="dmEditAlert" class="alert" style="margin-bottom:.6rem"></div>
+
+        <div class="dm-skill-row">
+          <div class="dm-ac-wrap">
+            <input id="dmEditSkillSearch" type="text" class="field-input"
+              placeholder="🔍 Search skill to add…" autocomplete="off"
+              oninput="dmSkillAc(this.value,'edit')"/>
+            <div id="dmEditSkillAcList" class="dm-ac-list" style="display:none"></div>
+          </div>
+          <select id="dmEditSkillImp" class="field-input dm-imp-sel">
+            <option value="core">Core</option>
+            <option value="secondary">Secondary</option>
+            <option value="bonus">Bonus</option>
+          </select>
+          <button class="btn-add-sm" onclick="dmAddChip('edit')">+ Add</button>
+        </div>
+
+        <div class="dm-chips-grid" id="dmEditChipsGrid">
+          <div class="dm-chips-col">
+            <div class="dm-chips-col-label dm-col-core">● Core</div>
+            <div id="dmEditCoreChips" class="dm-chips-col-body"></div>
+          </div>
+          <div class="dm-chips-col">
+            <div class="dm-chips-col-label dm-col-sec">● Secondary</div>
+            <div id="dmEditSecChips" class="dm-chips-col-body"></div>
+          </div>
+          <div class="dm-chips-col">
+            <div class="dm-chips-col-label dm-col-bonus">● Bonus</div>
+            <div id="dmEditBonusChips" class="dm-chips-col-body"></div>
+          </div>
+        </div>
+
+        <div class="dm-edit-footer">
+          <button class="dm-save-role-btn" onclick="dmSaveEdit()">✓ Save Changes to CSV</button>
+        </div>
+      </div>
+
+    </div><!-- /dmRolesPanel -->
+
+  </div><!-- /ad-wrap data manager -->
+
+
+  <div id="adToast" class="ad-toast"></div>
+
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/Admindashboard.js') }}"></script>
+  <script>
+    /* Session beacon — clears the server-side session when the tab/window closes */
+    window.addEventListener('pagehide', function(e) {
+      if (!e.persisted) {
+        navigator.sendBeacon('/admin/api/beacon-logout');
+      }
+    });
+  </script>
+</body>
+</html>

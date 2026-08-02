@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Create Account — Smart Resume Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/Styles.css') }}"/>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-left"></div>
+    <a href="{{ url_for('login') }}" class="nav-brand">
+      <span class="nav-brand-text">Smart Resume <span>Analyzer</span></span>
+    </a>
+    <div class="nav-right">
+      <a href="{{ url_for('login') }}" class="nav-logout">Sign In</a>
+    </div>
+  </nav>
+  <a href="{{ url_for('admin_login_page') }}" class="page-admin-link">Admin</a>
+
+  <div class="page-center">
+    <div class="single-card reg-card">
+
+      <div class="form-title">Create Account</div>
+      <div class="form-sub">Fill in your details to get started</div>
+
+      <div id="regAlert" class="alert form-alert"></div>
+
+      <div class="fields">
+
+        <!-- Full Name -->
+        <div class="field">
+          <label class="field-label" for="regName">Full Name</label>
+          <div class="input-wrap">
+            <input id="regName" name="name" type="text" class="field-input"
+              placeholder="Rahul Sharma"
+              autocomplete="name"
+              oninput="liveValidateName()"/>
+          </div>
+          <div class="field-hint" id="hintName"></div>
+        </div>
+
+        <!-- Username -->
+        <div class="field">
+          <label class="field-label" for="regUser">Username</label>
+          <div class="input-wrap">
+            <input id="regUser" name="username" type="text" class="field-input"
+              placeholder="rahul_sharma"
+              autocomplete="username"
+              oninput="liveValidateUsername()"/>
+          </div>
+          <div class="field-hint" id="hintUser"></div>
+        </div>
+
+        <!-- Email -->
+        <div class="field">
+          <label class="field-label" for="regEmail">Email</label>
+          <div class="input-wrap">
+            <input id="regEmail" name="email" type="email" class="field-input"
+              placeholder="rahul.sharma@gmail.com"
+              autocomplete="email"
+              oninput="liveValidateEmail()"/>
+          </div>
+          <div class="field-hint" id="hintEmail"></div>
+        </div>
+
+        <!-- Phone -->
+        <div class="field">
+          <label class="field-label" for="regPhone">Phone</label>
+          <div class="input-wrap">
+            <input id="regPhone" name="phone" type="tel" class="field-input"
+              placeholder="98765 43210"
+              maxlength="10"
+              autocomplete="tel"
+              oninput="this.value=this.value.replace(/\D/g,'').slice(0,10); liveValidatePhone()"/>
+          </div>
+          <div class="field-hint" id="hintPhone"></div>
+        </div>
+
+        <!-- Role toggle -->
+        <div class="field">
+          <label class="field-label">I am a</label>
+          <div class="role-toggle">
+            <button type="button" class="role-btn active"
+              id="roleStudent"
+              onclick="setRole('student')">Student</button>
+            <button type="button" class="role-btn"
+              id="roleProfessional"
+              onclick="setRole('professional')">Professional</button>
+          </div>
+          <input type="hidden" id="roleInput" name="role" value="student"/>
+        </div>
+
+        <!-- Password -->
+        <div class="field">
+          <label class="field-label" for="regPw">Password</label>
+          <div class="input-wrap">
+            <input id="regPw" name="password" type="password" class="field-input has-btn"
+              placeholder="Min 8 chars · A-Z · 0-9 · symbol"
+              autocomplete="new-password"
+              oninput="liveValidatePassword()"/>
+            <button type="button" class="show-pw-btn"
+              onclick="toggleVisibility('regPw', this)">Show</button>
+          </div>
+          <!-- Strength bars -->
+          <div class="strength-bar-wrap" id="pwStrengthBar">
+            <div class="strength-seg"></div>
+            <div class="strength-seg"></div>
+            <div class="strength-seg"></div>
+            <div class="strength-seg"></div>
+          </div>
+          <div class="field-hint" id="hintPw"></div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="field">
+          <label class="field-label" for="regConfirm">Confirm Password</label>
+          <div class="input-wrap">
+            <input id="regConfirm" name="confirm" type="password" class="field-input has-btn"
+              placeholder="Re-enter your password"
+              autocomplete="new-password"
+              oninput="liveValidateConfirm()"/>
+            <button type="button" class="show-pw-btn"
+              onclick="toggleVisibility('regConfirm', this)">Show</button>
+          </div>
+          <div class="field-hint" id="hintConfirm"></div>
+        </div>
+
+        <button id="regBtn" type="button" class="btn btn-green"
+          onclick="handleRegister()">Create Account</button>
+
+      </div>
+
+      <div class="form-footer">
+        Already have an account?
+        <a href="{{ url_for('login') }}" class="text-link">Sign in</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/register.js') }}"></script>
+</body>
+</html>
